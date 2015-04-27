@@ -1,0 +1,18 @@
+4 question files corresponding to each color category
+Each file contains lists structured as follows:
+    Question_#ID = [ Qtype, Question, answer1, answer2, answer3, answer4]
+
+    where Qtype = type of question
+          Question_#ID = hash of Question string
+          answer1 - answer4 are optional based on if the question is multiple choice or not.
+
+1 answer file that contains dictionary of Question_#ID : answer
+
+
+1 class to update and/or delete questions and answers
+1 class to add new question
+1 class for TF questions
+1 class for Multiple choice questions
+
+selecting questions:
+    add qid# to a list that is checked every time to make sure you are not repeating questions.
