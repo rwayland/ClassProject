@@ -1,10 +1,14 @@
 __author__ = 'derek'
-import Question
+from Question import Question
 
 
-class TrueFalseQuestion(Question):
+class MultipleChoiceQuestion(Question):
     qType = "MC"
-    question = ""
+    # question = ""
+    possibleAnswer1 = ""
+    possibleAnswer2 = ""
+    possibleAnswer3 = ""
+    possibleAnswer4 = ""
 
-    def __init__(self):
-        Question.__init__(self, self.qType)
+    # def __init__(self, question, *args):
+    #     Question.__init__(self, self.qType, question)

@@ -4,13 +4,14 @@ from Utility import Utility
 import os
 import shelve
 import random
-from CustomExceptions import CategoryDNEError, NoMoreUniqueQuestions
+from CustomExceptions import CategoryDNEError, NoMoreUniqueQuestions, NoAnswerSetForQuestion
 
 
 class QuestionFetcher:
 
     categoryNames = list()
-    answerFile = ""
+    answerFileName = None
+    answerFilePath = None
     questionFileName = "Questions"
     questionFilePath = None
     usedQuestionsFileName = "UsedQuestions"
@@ -18,7 +19,8 @@ class QuestionFetcher:
     questionConfigParser = None
     questionShelf = None
     usedQuestionShelf = None
-    questionRecycler = False
+    answerShelf = None
+    questionRecycler = True
 
     def __init__(self):
         # self.currentQuestion
@@ -26,13 +28,15 @@ class QuestionFetcher:
         self.__loadAnswerFile()
         utility = Utility()
         self.categoryNames = utility.getCategorySectionNames
-        self.answerFile = utility.getAnswerFileName()
+        self.answerFileName = utility.getAnswerFileName()
         self.questionFilePath = os.path.join(os.pardir, Utility.supportFilesDir, QuestionFetcher.questionFileName)
         self.usedQuestionsFilePath = os.path.join(os.pardir, Utility.supportFilesDir, self.usedQuestionsFileName)
+        self.answerFilePath = os.path.join(os.pardir, Utility.supportFilesDir, self.answerFileName)
 
     def fetchQuestion(self, category):
         if category in self.categoryNames:
             localShelf = self._getQuestionShelf()
+            questionCandidateHash = None
             questionCandidate = None
 
             if category in localShelf:  # check for valid category
@@ -44,8 +48,8 @@ class QuestionFetcher:
                 # checks for unused questions, but exits if all questions are used
                 while questionUsed and indexer < maxValue:
                     temp = localShelf.get(category, None)
-                    questionCandidate = random.choice(temp)  # chooses a random question from the list
-                    questionUsed = self.__checkIfQuestionUsed(category, questionCandidate[0])
+                    questionCandidateHash = random.choice(temp)  # chooses a random question from the list
+                    questionUsed = self.__checkIfQuestionUsed(category, questionCandidateHash[0])
 
                     if questionUsed:  # here to handle if the list is only 1 item long
                         indexer += 1
@@ -55,13 +59,14 @@ class QuestionFetcher:
                         self._resetUniqueQuestionsForCategory(category)
                         questionCandidate = self.fetchQuestion(category)
                     else:
-                        questionCandidate = None
+                        questionCandidateHash = None
                         localShelf.close()
                         raise NoMoreUniqueQuestions(category)
 
                 # while loop exited because it has a unique question
                 else:
-                    self.__markQuestionAsUsed(category, questionCandidate[0])
+                    questionCandidate = localShelf[questionCandidateHash]
+                    self.__markQuestionAsUsed(category, questionCandidateHash)
 
             # category is not in local shelf!
             else:
@@ -71,10 +76,16 @@ class QuestionFetcher:
             localShelf.close()
         else:
             raise CategoryDNEError(category)
+
         return questionCandidate
 
     def fetchAnswer(self, questionHash):
-        answer = ""
+        answer = None
+        localShelf = self._getAnswerShelf()
+        if questionHash in localShelf:
+            answer = localShelf[questionHash]
+        else:
+            raise NoAnswerSetForQuestion(questionHash)
         return answer
 
     def __checkIfQuestionUsed(self, category, questionHash):
@@ -120,6 +131,13 @@ class QuestionFetcher:
 
     def __loadAnswerFile(self):
         self.answersFile = Utility.getAnswerFileName
+
+    def __openAnswerShelf(self):
+        self.answerShelf = shelve.open(self.answerFilePath, "c", 2)
+
+    def _getAnswerShelf(self):
+        self.__openAnswerShelf()
+        return self.answerShelf
 
     def __openQuestionShelf(self):
         self.questionShelf = shelve.open(self.questionFilePath, "c", 2)

@@ -1,10 +1,9 @@
 __author__ = 'derek'
-import Question
-
+from Question import Question
 
 class TrueFalseQuestion(Question):
     qType = "TF"
-    question = ""
+    # question = ""
 
-    def __init__(self):
-        Question.__init__(self, self.qType)
+    def __init__(self, question):
+        Question.__init__(self, self.qType, question)

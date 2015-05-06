@@ -15,12 +15,13 @@ class Utility:
     supportFilesDir = "SupportFiles"
     categorySection = "Category"
     answerSection = "Answers"
-    answerFile = "AnswerFile"
+    answerFileName = "AnswerFile"
     _defaultCategories = []
 
     def __init__(self):
         self.config = ConfigParser.RawConfigParser()
         self.gameOptionsPath = os.path.join(os.path.dirname(__file__), self.supportFilesDir, self.gameOptionsName)
+        self.answerFilePath = os.path.abspath(os.path.join(os.pardir, Utility.supportFilesDir, self.answerFileName))
         self.config.read(self.gameOptionsPath)
 
     @property
@@ -60,16 +61,19 @@ class Utility:
             newEntriesAdded = True
 
         # checks to make sure the kev:value pair exists, if not, writes the default to the file in this method.
-        if not self.config.has_option(self.answerSection, self.answerFile):
+        if not self.config.has_option(self.answerSection, self.answerFileName):
             self.config.set('Answers', "AnswerFile", "AnswerFile")
             newEntriesAdded = True
         if newEntriesAdded:
             self._writeToFile()
         return self.config.get('Answers', "AnswerFile")
 
+    def getAnswerPath(self):
+        return self.answerFilePath
+
     def _createAnswerSection(self):
         self.config.add_section(self.answerSection)
-        self.config.set(self.answerSection, self.answerFile, self.answerFile)
+        self.config.set(self.answerSection, self.answerFileName, self.answerFileName)
 
     # Creates a CategorySection if it is not already in the GameOptions file
     def _createCategorySection(self):

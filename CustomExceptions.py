@@ -30,3 +30,11 @@ class NoMoreUniqueQuestions(CustomExceptions):
 
     def __str__(self):
         return repr(self.value)
+
+class NoAnswerSetForQuestion(CustomExceptions):
+
+    def __init__(self, questionHash):
+        self.value = questionHash
+
+    def __str__(self):
+        return repr(self.value)
