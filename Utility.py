@@ -5,10 +5,10 @@ import os
 
 class Utility:
 
-    category1DefaultFile = "redCategory.txt"
-    category2DefaultFile = "whiteCategory.txt"
-    category3DefaultFile = "blueCategory.txt"
-    category4DefaultFile = "greenCategory.txt"
+    category1DefaultName = "redCategory"
+    category2DefaultName = "whiteCategory"
+    category3DefaultName = "blueCategory"
+    category4DefaultName = "greenCategory"
     defaultsLoaded = False
     gameOptionsName = "GameOptions"
     gameOptionsPath = ''
@@ -24,11 +24,11 @@ class Utility:
         self.config.read(self.gameOptionsPath)
 
     @property
-    def getCategoryFileNames(self):
+    def getCategorySectionNames(self):
 
         index = 0
         newEntriesAdded = False
-        fileNames = list()
+        sectionNames = list()
 
         if not self.config.has_section(self.categorySection):
             self._createCategorySection()
@@ -42,13 +42,13 @@ class Utility:
                 self._createCategoryFileName(catName, index)  # creates the missing category
                 newEntriesAdded = True  # tells the method that it must write the new results to disk
 
-            fileNames.append(self.config.get(self.categorySection, catName))
+            sectionNames.append(self.config.get(self.categorySection, catName))
             index += 1
 
         if newEntriesAdded:
             self._writeToFile()
 
-        return fileNames  # stringArray
+        return sectionNames  # stringArray
 
     # gets the path to the Answers file for the QuestionFetcher
     def getAnswerFileName(self):
@@ -81,11 +81,13 @@ class Utility:
 
     # loads the default file names.
     def _loadDefaultFileNames(self):
-        defaultCategories = [self.category1DefaultFile, self.category2DefaultFile,
-                             self.category3DefaultFile, self.category4DefaultFile]
+        defaultCategories = [self.category1DefaultName, self.category2DefaultName,
+                             self.category3DefaultName, self.category4DefaultName]
         self.defaultsLoaded = True
         return defaultCategories
 
     def _writeToFile(self):
         with open(self.gameOptionsPath, 'wb') as configfile:
                 self.config.write(configfile)
+
+    # def _setConfigReader(self):

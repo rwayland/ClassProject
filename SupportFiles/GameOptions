@@ -1,6 +1,9 @@
 [Category]
-category1 = redCategory.txt
-category2 = whiteCategory.txt
-category3 = blueCategory.txt
-category4 = greenCategory.txt
+category1 = redCategory
+category2 = whiteCategory
+category3 = blueCategory
+category4 = greenCategory
+
+[Answers]
+answerfile = AnswerFile
 
