@@ -72,8 +72,8 @@ class FrameTest(wx.Frame):
         ## self.Bind(wx.EVT_BUTTON,self.awardCake,btnCake)
 
         szMain.Add(btnQuestion)
-        szMain.Add(btnAdvance)
-        szMain.Add(btnCake)
+        ## szMain.Add(btnAdvance)
+        ## szMain.Add(btnCake)
 
         self.mainFrame = mainFrame
 
