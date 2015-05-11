@@ -54,6 +54,7 @@ class DialogQuestion(wx.Dialog):
         
 class FrameTest(wx.Frame):
     '''
+    '''
     def __init__(self,mainFrame):
         '''
         '''
