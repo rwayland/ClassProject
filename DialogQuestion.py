@@ -65,11 +65,11 @@ class FrameTest(wx.Frame):
         btnQuestion = wx.Button(self,-1,'Question')
         self.Bind(wx.EVT_BUTTON,self.question,btnQuestion)
 
-        btnAdvance = wx.Button(self,-1,'Advance')
-        self.Bind(wx.EVT_BUTTON,self.advancePlayer1,btnAdvance)
+        ## btnAdvance = wx.Button(self,-1,'Advance')
+        ## self.Bind(wx.EVT_BUTTON,self.advancePlayer1,btnAdvance)
 
-        btnCake = wx.Button(self,-1,'Cake')
-        self.Bind(wx.EVT_BUTTON,self.awardCake,btnCake)
+        ## btnCake = wx.Button(self,-1,'Cake')
+        ## self.Bind(wx.EVT_BUTTON,self.awardCake,btnCake)
 
         szMain.Add(btnQuestion)
         szMain.Add(btnAdvance)
@@ -94,7 +94,7 @@ class FrameTest(wx.Frame):
 def main():
     app = wx.PySimpleApp()
 
-    frm = FrameTest(frmTrival)
+    frm = FrameTest(None)
     frm.Show()
 
     app.MainLoop()
