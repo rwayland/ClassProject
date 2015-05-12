@@ -34,49 +34,57 @@ class QuestionFetcher:
         self.answerFilePath = os.path.join(os.pardir, Utility.supportFilesDir, self.answerFileName)
 
     def fetchQuestion(self, category):
-        if category in self.categoryNames:
-            localShelf = self._getQuestionShelf()
-            questionCandidateHash = None
-            questionCandidate = None
+        if "Hub" in category:
+            category = str.replace(category, "Hub", "")
+        category = str.lower(category)
+        found = False
+        for s in self.categoryNames:
+            if category in str(s):
+                found = True
+                category = s
+                localShelf = self._getQuestionShelf()
+                questionCandidateHash = None
+                questionCandidate = None
 
-            if category in localShelf:  # check for valid category
-                questionUsed = True  # intialized to True for the while loop below
-                indexer = 0  # sentry value to make sure we are not exceeding the list size
-                categoryCountString = category + "Count"  # string of where the size of the list is located.
-                maxValue = int(localShelf[categoryCountString])  # size of list
+                if category in localShelf:  # check for valid category
+                    questionUsed = True  # intialized to True for the while loop below
+                    indexer = 0  # sentry value to make sure we are not exceeding the list size
+                    categoryCountString = category + "Count"  # string of where the size of the list is located.
+                    maxValue = int(localShelf[categoryCountString])  # size of list
 
-                # checks for unused questions, but exits if all questions are used
-                while questionUsed and indexer < maxValue:
-                    temp = localShelf.get(category, None)
-                    questionCandidateHash = random.choice(temp)  # chooses a random question from the list
-                    questionUsed = self.__checkIfQuestionUsed(category, questionCandidateHash[0])
+                    # checks for unused questions, but exits if all questions are used
+                    while questionUsed and indexer < maxValue:
+                        temp = localShelf.get(category, None)
+                        questionCandidateHash = random.choice(temp)  # chooses a random question from the list
+                        questionUsed = self.__checkIfQuestionUsed(category, questionCandidateHash[0])
 
-                    if questionUsed:  # here to handle if the list is only 1 item long
-                        indexer += 1
-                # Check for reason that while loop exited.
-                if indexer == maxValue:  # means that all questions are used
-                    if self.questionRecycler:
-                        self._resetUniqueQuestionsForCategory(category)
-                        questionCandidate = self.fetchQuestion(category)
+                        if questionUsed:  # here to handle if the list is only 1 item long
+                            indexer += 1
+                    # Check for reason that while loop exited.
+                    if indexer == maxValue:  # means that all questions are used
+                        if self.questionRecycler:
+                            self._resetUniqueQuestionsForCategory(category)
+                            questionCandidate = self.fetchQuestion(category)
+                        else:
+                            questionCandidateHash = None
+                            localShelf.close()
+                            raise NoMoreUniqueQuestions(category)
+
+                    # while loop exited because it has a unique question
                     else:
-                        questionCandidateHash = None
-                        localShelf.close()
-                        raise NoMoreUniqueQuestions(category)
-
-                # while loop exited because it has a unique question
-                else:
-                    questionCandidate = localShelf[questionCandidateHash]
-                    self.__markQuestionAsUsed(category, questionCandidateHash)
+                        questionCandidate = localShelf[questionCandidateHash]
+                        self.__markQuestionAsUsed(category, questionCandidateHash)
 
             # category is not in local shelf!
-            else:
+                else:
+                    localShelf.close()
+                    raise CategoryDNEError(category)
+                localShelf.sync()
                 localShelf.close()
-                raise CategoryDNEError(category)
-            localShelf.sync()
-            localShelf.close()
-        else:
+            if found is True:
+                break
+        if found is False:
             raise CategoryDNEError(category)
-
         return questionCandidate
 
     def fetchAnswer(self, questionHash):

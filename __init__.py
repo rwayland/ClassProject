@@ -7,22 +7,38 @@ from CustomExceptions import QuestionAlreadyExistsError, CategoryDNEError, NoMor
 blah = QuestionManager.QuestionManager()
 cat1 = 'redCategory'
 cat2 = 'blueCategory'
-# initSetup = True
-initSetup = False
+cat3 = 'redCategory'
+cat4 = 'greenCategory'
+initSetup = True
+# initSetup = False
 
 if initSetup:
     try:
-        QuestionEditor.QuestionEditor().createNewQuestion(cat1, 'TF', "What is your Favorite Question?", "True/False")
+        QuestionEditor.QuestionEditor().createNewQuestion(cat1, 'TF', "is your Favorite Question?", "True/False")
     except QuestionAlreadyExistsError:
         print("Awww Snap! Question Already Exists!")
 
     try:
-        QuestionEditor.QuestionEditor().createNewQuestion(cat1, 'TF', "What is your Favorite Color?", "Blue")
+        QuestionEditor.QuestionEditor().createNewQuestion(cat1, 'TF', "your Favorite Color?", "Blue")
     except QuestionAlreadyExistsError:
         print("Awww Snap! Question Already Exists!")
 
     try:
-        QuestionEditor.QuestionEditor().createNewQuestion(cat2, 'TF', "Who is your Favorite Person?", "Wife!")
+        QuestionEditor.QuestionEditor().createNewQuestion(cat2, 'TF', "Who your Favorite Person?", "Wife!")
+    except QuestionAlreadyExistsError:
+        print("Awww Snap! Question Already Exists!")
+    try:
+        QuestionEditor.QuestionEditor().createNewQuestion(cat3, 'TF', "What is your Favorite Q?", "True/False")
+    except QuestionAlreadyExistsError:
+        print("Awww Snap! Question Already Exists!")
+
+    try:
+        QuestionEditor.QuestionEditor().createNewQuestion(cat3, 'TF', "What is your Fav Color?", "Blue")
+    except QuestionAlreadyExistsError:
+        print("Awww Snap! Question Already Exists!")
+
+    try:
+        QuestionEditor.QuestionEditor().createNewQuestion(cat4, 'TF', "Who is your Fav Person?", "Wife!")
     except QuestionAlreadyExistsError:
         print("Awww Snap! Question Already Exists!")
 else:
