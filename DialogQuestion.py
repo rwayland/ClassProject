@@ -41,7 +41,7 @@ class DialogQuestion(wx.Dialog):
         '''
             Name: getSelection
             Description:  Return the selection
-            In: self - class varaible
+            In: self - class variable
         '''
         cnt = 0
         val = 0
@@ -51,7 +51,8 @@ class DialogQuestion(wx.Dialog):
             cnt += 1
 
         return val
-        
+
+
 class FrameTest(wx.Frame):
     '''
     '''
@@ -72,8 +73,8 @@ class FrameTest(wx.Frame):
         ## self.Bind(wx.EVT_BUTTON,self.awardCake,btnCake)
 
         szMain.Add(btnQuestion)
-        szMain.Add(btnAdvance)
-        szMain.Add(btnCake)
+##        szMain.Add(btnAdvance)
+##        szMain.Add(btnCake)
 
         self.mainFrame = mainFrame
 
@@ -90,7 +91,7 @@ class FrameTest(wx.Frame):
             print(val)
 
         dlg.Destroy()
-        
+
 def main():
     app = wx.PySimpleApp()
 
