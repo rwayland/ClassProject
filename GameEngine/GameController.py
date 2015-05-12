@@ -3,6 +3,8 @@ __author__ = 'derek'
 from QuestionManager import QuestionManager
 from Player import Player
 from GameBoard import GameBoard
+from DialogQuestion import DialogQuestion
+import wx
 import uuid
 
 
@@ -64,16 +66,33 @@ class GameController:
 
     def executeQuestionPhase(self, color):
         question = self.questionManager.getUniqueQuestion(color)
-        print(question)
-        choice = input()
+        app = wx.PySimpleApp()
+        val = self.questionToGui(question)
+        app.MainLoop()
         answer = self.questionManager.getAnswerToQuestion(question[0])
-        if answer == choice:
 
+        if question[1] == "TF":
+            if val == 0:
+                choice = True
+            else:
+                choice = False
+        if answer == choice:
             self.correctLogic(color)
             self.checkForWinner()
         else:
             print(answer)
         return
+
+    def questionToGui(self, question):
+        if question[1] == "TF":
+            dlg = DialogQuestion(question[2], ["True", "False"])
+        else:
+            dlg = DialogQuestion(question[2], [question[3], question[4], question[5], question[6]])
+        if dlg.ShowModal() == wx.ID_OK:
+            val = dlg.getSelection()
+            print(val)
+        dlg.Destroy()
+        return val
 
     def _incrementCurrentPlayer(self):
         currentIndex = self.players.index(self.currentPlayer)

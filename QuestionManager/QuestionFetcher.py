@@ -36,7 +36,8 @@ class QuestionFetcher:
     def fetchQuestion(self, category):
         if "Hub" in category:
             category = str.replace(category, "Hub", "")
-        category = str.lower(category)
+        if "Category" not in category:
+            category = str.lower(category)
         found = False
         for s in self.categoryNames:
             if category in str(s):

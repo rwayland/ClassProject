@@ -1,11 +1,13 @@
 import wx
 
+
 class DialogQuestion(wx.Dialog):
     '''
         Name: DialogQuestion
         Description:  Dialogbox that displays a question and four possible answers
     '''
-    def __init__(self,question,questionChoices):
+
+    def __init__(self, question, questionChoices):
         '''
             Name:__init__
             Description: Main constructor
@@ -15,23 +17,23 @@ class DialogQuestion(wx.Dialog):
                 queestionChoices - list of string representing answer to a question
         '''
 
-        #init parent
-        wx.Dialog.__init__(self,None,wx.ID_ANY,'Question')
+        # init parent
+        wx.Dialog.__init__(self, None, wx.ID_ANY, 'Question')
 
         #Main Sizer
         szMain = wx.BoxSizer(wx.VERTICAL)
 
-        ques = wx.StaticText(self,-1,question)
+        ques = wx.StaticText(self, -1, question)
         szMain.Add(ques)
 
         #Questions
         choices = []
         for question in questionChoices:
-            choice = wx.RadioButton(self,-1,question)
+            choice = wx.RadioButton(self, -1, question)
             choices.append(choice)
             szMain.Add(choice)
 
-        btnSubmit = wx.Button(self,wx.ID_OK,'Submit')
+        btnSubmit = wx.Button(self, wx.ID_OK, 'Submit')
         szMain.Add(btnSubmit)
 
         self.SetSizerAndFit(szMain)
@@ -56,41 +58,35 @@ class DialogQuestion(wx.Dialog):
 class FrameTest(wx.Frame):
     '''
     '''
-    def __init__(self,mainFrame):
+
+    def __init__(self, mainFrame):
         '''
         '''
-        wx.Frame.__init__(self,None)
+        wx.Frame.__init__(self, None)
 
         szMain = wx.BoxSizer()
 
-        btnQuestion = wx.Button(self,-1,'Question')
-        self.Bind(wx.EVT_BUTTON,self.question,btnQuestion)
-
-        ## btnAdvance = wx.Button(self,-1,'Advance')
-        ## self.Bind(wx.EVT_BUTTON,self.advancePlayer1,btnAdvance)
-
-        ## btnCake = wx.Button(self,-1,'Cake')
-        ## self.Bind(wx.EVT_BUTTON,self.awardCake,btnCake)
+        btnQuestion = wx.Button(self, -1, 'Question')
+        self.Bind(wx.EVT_BUTTON, self.question, btnQuestion)
 
         szMain.Add(btnQuestion)
-##        szMain.Add(btnAdvance)
-##        szMain.Add(btnCake)
 
         self.mainFrame = mainFrame
 
         self.SetSizer(szMain)
 
-    def question(self,event):
+    def question(self, event):
         ques = 'This is a question!'
-        choices = ['A','B','C','D']
+        choices = ['A', 'B', 'C', 'D']
 
-        dlg = DialogQuestion(ques,choices)
+        dlg = DialogQuestion(ques, choices)
 
         if dlg.ShowModal() == wx.ID_OK:
             val = dlg.getSelection()
             print(val)
 
         dlg.Destroy()
+
 
 def main():
     app = wx.PySimpleApp()
@@ -99,6 +95,7 @@ def main():
     frm.Show()
 
     app.MainLoop()
+
 
 if __name__ == '__main__':
     main()

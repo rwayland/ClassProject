@@ -7,10 +7,10 @@ from CustomExceptions import QuestionAlreadyExistsError, CategoryDNEError, NoMor
 blah = QuestionManager.QuestionManager()
 cat1 = 'redCategory'
 cat2 = 'blueCategory'
-cat3 = 'redCategory'
+cat3 = 'whiteCategory'
 cat4 = 'greenCategory'
-initSetup = True
-# initSetup = False
+# initSetup = True
+initSetup = False
 
 if initSetup:
     try:
