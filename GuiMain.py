@@ -690,8 +690,8 @@ def main():
     frmTrival = FrameMain(title)
     frmTrival.Show()
 
-##    frm = FrameTest(frmTrival)
-##    frm.Show()
+    frm = FrameTest(frmTrival)
+    frm.Show()
 
 ##    frmQues = FrameQuestionEditor(None,'Question Editor')
 ##    testQuestion(frmQues)
