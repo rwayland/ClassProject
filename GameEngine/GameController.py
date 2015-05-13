@@ -4,6 +4,7 @@ from QuestionManager import QuestionManager
 from Player import Player
 from GameBoard import GameBoard
 from DialogQuestion import DialogQuestion
+from GuiMain import FrameMain, DialogDice
 import wx
 import uuid
 
@@ -20,23 +21,38 @@ class GameController:
     def __init__(self):
         self.gameId = uuid.uuid4()
         self.questionManager = QuestionManager.QuestionManager()
+        app = wx.PySimpleApp()
+        self.frameMain = FrameMain("Hello")
+        self.frameMain.Show()
         self._initiatePlayers(4)
         self.gameBoard = GameBoard()
         self.currentPlayer = self.players[0]
         # self.currentPlayer = Player()
         self.mainGameLoop()
+        app.MainLoop()
 
     def mainGameLoop(self):
         while self.winner is None:
+            currentPlayerString = "Player " + str(self.players.index(self.currentPlayer) + 1) + " Turn!"
+            blah = wx.MessageDialog(None, currentPlayerString)
+            if blah.ShowModal() == wx.ID_OK:
+                pass
+            blah.Destroy()
             self.executeCurrentPlayersTurn()
             self._incrementCurrentPlayer()
         return
 
     def executeCurrentPlayersTurn(self):
         roll = self.currentPlayer.getRollResult()
-        # TODO move number of spaces depending on players selection
+        dicer = DialogDice(roll)
+        if dicer.ShowModal() == wx.ID_OK:
+            pass
+        dicer.Destroy()
+        rollResult = roll[0] + roll[1]
         if not self.currentPlayer.inSpoke():
-            newPosition = self.currentPlayer.getCurrentPosition() + roll
+            currentPosition = self.currentPlayer.getCurrentPosition()
+            newPosition = currentPosition + rollResult
+            self.frameMain.gameboard.MovePlayer(self.players.index(self.currentPlayer), currentPosition, newPosition % 20)
             self.currentPlayer.setCurrentPosition(newPosition % 20)  # since there are 20 items in the main gameboard
         else:
             # ToDO add the logic if you are in the spoke.
@@ -66,9 +82,9 @@ class GameController:
 
     def executeQuestionPhase(self, color):
         question = self.questionManager.getUniqueQuestion(color)
-        app = wx.PySimpleApp()
+        # app = wx.PySimpleApp()
         val = self.questionToGui(question)
-        app.MainLoop()
+        # app.MainLoop()
         answer = self.questionManager.getAnswerToQuestion(question[0])
 
         if question[1] == "TF":
@@ -81,6 +97,8 @@ class GameController:
             self.checkForWinner()
         else:
             print(answer)
+        self.currentPlayer.finalizeTurn()
+        # self._incrementCurrentPlayer()
         return
 
     def questionToGui(self, question):
@@ -96,12 +114,14 @@ class GameController:
 
     def _incrementCurrentPlayer(self):
         currentIndex = self.players.index(self.currentPlayer)
-        self.currentPlayer = self.players[currentIndex]
+        newIndex = (currentIndex + 1) % len(self.players)
+        self.currentPlayer = self.players[newIndex]
         return
 
     def _initiatePlayers(self, numberOfPlayers):
         for index in range(numberOfPlayers):
             self.players.append(Player())
+            self.frameMain.gameboard.MovePlayer(index, 0, 0)
         return
 
     def __setWinner(self, player):

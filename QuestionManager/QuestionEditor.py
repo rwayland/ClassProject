@@ -4,7 +4,7 @@ import os
 from Utility import Utility
 from QuestionFetcher import QuestionFetcher
 from CustomExceptions import QuestionAlreadyExistsError
-# from MultipleChoiceQuestion import MultipleChoiceQuestion
+from MultipleChoiceQuestion import MultipleChoiceQuestion
 import shelve
 
 
@@ -26,8 +26,8 @@ class QuestionEditor:
 
         if questionType == "TF":
             newQuestion = TrueFalseQuestion(question)
-        # elif questionType == "MC":
-        #     newQuestion = MultipleChoiceQuestion()
+        elif questionType == "MC":
+             newQuestion = MultipleChoiceQuestion()
         formattedQuestion = newQuestion.toList()
         localShelf = self._getShelf()
 

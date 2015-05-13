@@ -3,7 +3,7 @@
 # Purpose:  Module that contains most of the visual elements to the game
 #
 # Author:      Rob Wayland
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 import wx
 import random
@@ -329,7 +329,7 @@ class Gameboard(wx.Panel):
                 szMain.Add(pan, (height, ii), flag=wx.ALIGN_RIGHT)
             else:
                 szMain.Add(pan, (height, ii), flag=wx.ALIGN_CENTER)
-            ##            colorCnt += 1
+                ##            colorCnt += 1
 
         #Left middle
         tColor = ['red', 'gray', 'green', 'gray', 'blue']
@@ -596,7 +596,7 @@ class PanelTile(wx.Panel):
             self.rollAgain = False
 
             pnPlay1 = self.SubpanelPlayer(size)
-            pnPlay1.SetBackgroundColour(wx.NamedColor('gray'))
+            pnPlay1.SetBackgroundColour('gray')
             szMain.Add(pnPlay1, 1, wx.EXPAND)
 
             pnPlay2 = self.SubpanelPlayer(size)
@@ -641,7 +641,7 @@ class PanelTile(wx.Panel):
         if not self.rollAgain:
             for sel in selection:
                 player = self.players[sel]
-                player.SetBackgroundColour(wx.NamedColor(self.playerColors[sel]))
+                player.SetBackgroundColour(self.playerColors[sel])
                 self.Refresh()
 
     def UnselectPlayer(self, selection):
@@ -653,7 +653,7 @@ class PanelTile(wx.Panel):
         if not self.rollAgain:
             for sel in selection:
                 player = self.players[sel]
-                player.SetBackgroundColour(wx.NamedColor(self.defaultColor))
+                player.SetBackgroundColour(self.defaultColor)
                 self.Refresh()
 
 
@@ -666,7 +666,7 @@ class PanelTile(wx.Panel):
         if not self.rollAgain:
             for player in self.players:
                 ##            player = self.players[key]
-                player.SetBackgroundColour(wx.NamedColor(newNamedColor))
+                player.SetBackgroundColour(newNamedColor)
 
 
 class DialogDice(wx.Dialog):

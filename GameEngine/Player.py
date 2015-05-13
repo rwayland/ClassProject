@@ -20,8 +20,7 @@ class Player(object):
 
     def getRollResult(self):
         result = Dice.rollDice()
-        self._currentRollTotal = int(result[0]) + int(result[1])
-        return self._currentRollTotal
+        return result
 
     def finalizeTurn(self):
         self._currentRollTotal = 0

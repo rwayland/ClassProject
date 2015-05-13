@@ -9,36 +9,36 @@ cat1 = 'redCategory'
 cat2 = 'blueCategory'
 cat3 = 'whiteCategory'
 cat4 = 'greenCategory'
-# initSetup = True
-initSetup = False
+initSetup = True
+# initSetup = False
 
 if initSetup:
     try:
-        QuestionEditor.QuestionEditor().createNewQuestion(cat1, 'TF', "is your Favorite Question?", "True/False")
+        QuestionEditor.QuestionEditor().createNewQuestion(cat1, 'TF', "is your Favorite Question?", "True")
     except QuestionAlreadyExistsError:
         print("Awww Snap! Question Already Exists!")
 
     try:
-        QuestionEditor.QuestionEditor().createNewQuestion(cat1, 'TF', "your Favorite Color?", "Blue")
+        QuestionEditor.QuestionEditor().createNewQuestion(cat1, 'TF', "your Favorite Color?", "True")
     except QuestionAlreadyExistsError:
         print("Awww Snap! Question Already Exists!")
 
     try:
-        QuestionEditor.QuestionEditor().createNewQuestion(cat2, 'TF', "Who your Favorite Person?", "Wife!")
+        QuestionEditor.QuestionEditor().createNewQuestion(cat2, 'TF', "Who your Favorite Person?", "True")
     except QuestionAlreadyExistsError:
         print("Awww Snap! Question Already Exists!")
     try:
-        QuestionEditor.QuestionEditor().createNewQuestion(cat3, 'TF', "What is your Favorite Q?", "True/False")
-    except QuestionAlreadyExistsError:
-        print("Awww Snap! Question Already Exists!")
-
-    try:
-        QuestionEditor.QuestionEditor().createNewQuestion(cat3, 'TF', "What is your Fav Color?", "Blue")
+        QuestionEditor.QuestionEditor().createNewQuestion(cat3, 'TF', "What is your Favorite Q?", "True")
     except QuestionAlreadyExistsError:
         print("Awww Snap! Question Already Exists!")
 
     try:
-        QuestionEditor.QuestionEditor().createNewQuestion(cat4, 'TF', "Who is your Fav Person?", "Wife!")
+        QuestionEditor.QuestionEditor().createNewQuestion(cat3, 'TF', "What is your Fav Color?", "True")
+    except QuestionAlreadyExistsError:
+        print("Awww Snap! Question Already Exists!")
+
+    try:
+        QuestionEditor.QuestionEditor().createNewQuestion(cat4, 'TF', "Who is your Fav Person?", "True")
     except QuestionAlreadyExistsError:
         print("Awww Snap! Question Already Exists!")
 else:
