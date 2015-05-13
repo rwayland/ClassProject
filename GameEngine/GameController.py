@@ -60,8 +60,8 @@ class GameController:
         if not self.currentPlayer.inSpoke():
             newPosition = currentPosition + rollResult
             if newPosition == any([2, 7, 12, 17]):
-            self.frameMain.gameboard.MovePlayer(self.players.index(self.currentPlayer), currentPosition, newPosition % 20)
-            self.currentPlayer.setCurrentPosition(newPosition % 20)  # since there are 20 items in the main gameboard
+                self.frameMain.gameboard.MovePlayer(self.players.index(self.currentPlayer), currentPosition, newPosition % 20)
+                self.currentPlayer.setCurrentPosition(newPosition % 20)  # since there are 20 items in the main gameboard
         else:
             # ToDO add the logic if you are in the spoke.
             return
@@ -84,6 +84,7 @@ class GameController:
             isColorHub = False
         if isColorHub:
             self.currentPlayer.receiveWedge(color)
+            self.frameMain.gameboard.scoreboard.AwardCake(self.players.index(self.currentPlayer),color)
         self.currentPlayer.finalizeTurn()
         self.executeCurrentPlayersTurn()
         return
