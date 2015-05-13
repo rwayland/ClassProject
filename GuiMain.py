@@ -197,6 +197,7 @@ class Gameboard(wx.Panel):
             spoke[inInd].SelectPlayer([player])
 
         else:
+            print(self.boardTiles[newPos])
             self.boardTiles[newPos].SelectPlayer([player])
 
 

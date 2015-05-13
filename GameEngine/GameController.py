@@ -49,9 +49,17 @@ class GameController:
             pass
         dicer.Destroy()
         rollResult = roll[0] + roll[1]
+        currentPosition = self.currentPlayer.getCurrentPosition()
+        if currentPosition == any([2, 7, 12, 17]):
+            getOnSpoke = wx.MessageDialog(None, "Go Up Spoke?")
+            if getOnSpoke.ShowModal() == wx.ID_OK:
+                val = getOnSpoke.getSelection()
+            getOnSpoke.Destroy()
+
+
         if not self.currentPlayer.inSpoke():
-            currentPosition = self.currentPlayer.getCurrentPosition()
             newPosition = currentPosition + rollResult
+            if newPosition == any([2, 7, 12, 17]):
             self.frameMain.gameboard.MovePlayer(self.players.index(self.currentPlayer), currentPosition, newPosition % 20)
             self.currentPlayer.setCurrentPosition(newPosition % 20)  # since there are 20 items in the main gameboard
         else:
