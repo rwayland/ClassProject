@@ -404,10 +404,10 @@ class PanelScoreboard(wx.Panel):
 
         szPlayer = wx.BoxSizer(wx.HORIZONTAL)
 
-        dicPlayers = {}
-        for player in playerNames:
-            dicPlayers[player] = PanelPlayer(self, player, catColors)
-            szPlayer.Add(dicPlayers[player], 1, wx.EXPAND)
+        dicPlayers = []
+        for ii in range(playerNames):
+            dicPlayers[ii] = PanelPlayer(self, playerNames[ii], catColors)
+            szPlayer.Add(dicPlayers[ii], 1, wx.EXPAND)
 
         self.dicPlayers = dicPlayers
 
