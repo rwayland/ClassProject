@@ -322,7 +322,7 @@ class Gameboard(wx.Panel):
 
         #Bottom
         tColor = ['white', 'gray', 'red', 'gray', 'green']
-        for ii in range(5):
+        for ii in reversed(range(5)):
             pan = PanelTile(self, tColor[ii], playerColors)
             self.boardTiles.append(pan)
             if ii == 0:
@@ -333,7 +333,7 @@ class Gameboard(wx.Panel):
 
         #Left middle
         tColor = ['red', 'gray', 'green', 'gray', 'blue']
-        for ii in range(5):
+        for ii in reversed(range(5)):
             pan = PanelTile(self, tColor[ii], playerColors)
             self.boardTiles.append(pan)
             szMain.Add(pan, (ii + 1, 0), flag=wx.ALIGN_RIGHT)
